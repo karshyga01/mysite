@@ -1,24 +1,39 @@
-import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <section className="grid gap-6 md:grid-cols-2 items-center">
+    <main className="container mx-auto px-6 py-12 grid md:grid-cols-2 gap-8 items-center">
+      {/* Левая часть — текст */}
       <div>
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-          Природный камень для фасадов, дорожек и интерьеров
-        </h1>
-        <p className="mt-4 text-lg text-gray-700">
-          Гранит Кордай, бордюры, плитка, брусчатка. Производство и поставка по Казахстану. Опт и проекты.
+     <h1 className="text-4xl font-bold leading-tight">
+  Природный камень <br /> для фасадов, дорожек, интерьеров и памятников
+</h1>
+
+<p className="mt-4 text-xl italic text-gray-600">
+  Природная красота, проверенная временем
+</p>
+
+        <p className="mt-4 text-gray-700">
+          Гранит Кордай, бордюры, плитка, брусчатка. Производство и поставка по
+          Казахстану. Опт и проекты.
         </p>
-        <div className="mt-6 flex gap-3">
-          <Link href="/products" className="rounded-xl bg-blue-600 px-5 py-3 text-white font-medium hover:bg-blue-700 transition">
+
+        <div className="mt-6 flex gap-4">
+          <a
+            href="/catalog"
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
             Перейти в каталог
-          </Link>
-          <Link href="/contacts" className="rounded-xl border px-5 py-3 font-medium hover:bg-gray-100 transition">
+          </a>
+          <a
+            href="/contacts"
+            className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition"
+          >
             Рассчитать стоимость
-          </Link>
+          </a>
         </div>
-        <ul className="mt-8 grid gap-2 text-sm text-gray-700">
+
+        <ul className="mt-6 space-y-2 text-gray-700">
           <li>✅ Собственное производство/партнёры</li>
           <li>✅ Скорость: резка и отгрузка в срок</li>
           <li>✅ Доставка по РК, паллетирование</li>
@@ -26,9 +41,15 @@ export default function Home() {
         </ul>
       </div>
 
-      <div className="rounded-2xl border bg-white p-6 shadow-sm">
-        <img src="/images/hero-stone.jpg" alt="Гранитные плиты" className="rounded-xl object-cover w-full h-64" />
+      {/* Правая часть — картинка */}
+      <div className="relative w-full h-80 md:h-full">
+        <Image
+          src="/images/granite.jpg" // сохраняем картинку сюда: public/images/granite.jpg
+          alt="Гранитные плиты"
+          fill
+          className="object-cover rounded-xl"
+        />
       </div>
-    </section>
+    </main>
   );
 }

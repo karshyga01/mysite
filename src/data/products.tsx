@@ -48,3 +48,45 @@ export const PRODUCTS: Product[] = [
     cover: "/images/bordyur-1000x300x80.jpg"
   }
 ];
+
+// src/data/products.ts
+export type ProductVariant = {
+  id: string;
+  label: string;     // как показываем размер
+  price: number;     // цена в тенге
+};
+
+export type Product = {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle?: string;
+  category: string;
+  baseUnit?: string; // "шт", "комплект", "м²" и т.п.
+  images: string[];
+  variants: ProductVariant[];
+  description?: string;
+};
+
+export const products: Product[] = [
+  // ...другие товары
+
+  {
+    id: "monument-kordai",
+    slug: "monument-kordai",
+    title: "Памятник — гранит Кордай",
+    subtitle: "Полировка, строгие геометрии",
+    category: "Памятники",
+    baseUnit: "комплект",
+    images: ["/images/monuments/kordai-1.jpg"],
+    description:
+      "Памятники из гранита Кордай. Аккуратная полировка, долговечность. Возможно нанесение портрета и текста.",
+    variants: [
+      { id: "60x40x5",  label: "60×40×5 см",  price: 65000 },
+      { id: "70x40x6",  label: "70×40×6 см",  price: 78000 },
+      { id: "80x40x6",  label: "80×40×6 см",  price: 89000 },
+      { id: "90x50x8",  label: "90×50×8 см",  price: 129000 },
+    ],
+  },
+];
+

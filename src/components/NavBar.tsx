@@ -76,3 +76,5 @@ export default function NavBar() {
     </header>
   );
 }
+
+<a href="/about" className="hover:underline">О нас</a>
