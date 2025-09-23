@@ -1,37 +1,80 @@
-import Link from "next/link";
-import type { Product } from "@/data/products";
+// src/components/SimpleProductCard.tsx
+import Image from "next/image";
+import ColorSwatch from "@/components/ColorSwatch";
 
-export default function ProductCard({ p }: { p: Product }) {
+export default function SimpleProductCard({ p }: { p: any }) {
+  const title = composeTitle(p);
+
   return (
-    <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
-      <img
-        src={p.cover}
-        alt={p.name}
-        className="h-48 w-full object-cover"
-        loading="lazy"
-      />
-      <div className="p-4">
-        <h3 className="font-semibold">{p.name}</h3>
-        <p className="text-sm text-gray-600 mt-1 capitalize">
-          {p.stone} • {p.category} • {p.color}
-        </p>
-        <p className="mt-2 font-medium text-blue-700">{p.priceFrom}</p>
-        <div className="mt-4 flex gap-2">
-          <Link
-            href={`/products/${p.slug}`}
-            className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm hover:bg-blue-700 transition"
-          >
-            Подробнее
-          </Link>
-          <a
-            href={`https://wa.me/77001234567?text=Здравствуйте! Интересует товар: ${encodeURIComponent(p.name)}`}
-            target="_blank" rel="noopener"
-            className="px-4 py-2 rounded-xl border text-sm hover:bg-gray-100 transition"
-          >
-            Заказать в WhatsApp
-          </a>
-        </div>
+    <article className="group rounded-2xl border bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+      <div className="relative aspect-[4/3]">
+        <Image
+          src={p.cover || "/images/placeholder.jpg"}
+          alt={p.name || "Фото изделия"}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+        />
+        {p.category && (
+          <span className="absolute left-3 top-3 rounded-full bg-white/90 border text-xs px-2 py-1">
+            {capitalize(p.category)}
+          </span>
+        )}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/10 to-transparent" />
       </div>
-    </div>
+
+      <div className="p-4 flex flex-col gap-2.5">
+        {/* Заголовок */}
+        <h3 className="font-semibold text-base leading-tight group-hover:underline">
+          {title}
+        </h3>
+
+        {/* Мета: Камень • Категория • Цвет */}
+        <p className="text-sm text-gray-600">
+          {[
+            p.stone && capitalize(p.stone),
+            p.category && capitalize(p.category),
+            p.color && capitalize(p.color),
+          ]
+            .filter(Boolean)
+            .join(" • ")}
+        </p>
+
+        {/* Бейдж цвета (по желанию оставить) */}
+        <div className="mt-1 flex items-center gap-2">
+          {p.color && <ColorSwatch name={p.color} />}
+        </div>
+
+        {p.priceFrom && (
+          <div className="mt-1 text-lg font-bold">{p.priceFrom}</div>
+        )}
+      </div>
+    </article>
   );
+}
+
+/* -------- helpers -------- */
+function composeTitle(p: any) {
+  // Если размер в name уже есть — не дублируем
+  const hasSizeInName =
+    typeof p.name === "string" &&
+    typeof p.size === "string" &&
+    p.name.includes(cleanSize(p.size));
+
+  if (p.name) return p.name;
+  if (p.name && !hasSizeInName && p.size) return `${p.name} ${cleanSize(p.size)}`;
+  // если name пуст, соберём заголовок из категории/камня/размера
+  const parts = [
+    p.category ? capitalize(p.category) : "",
+    p.stone ? capitalize(p.stone) : "",
+    p.size ? cleanSize(p.size) : "",
+  ].filter(Boolean);
+  return parts.join(" ");
+}
+
+function cleanSize(s = "") {
+  return s.replace(/\s*мм$/i, ""); // "600×300×20 мм" -> "600×300×20"
+}
+function capitalize(s = "") {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }

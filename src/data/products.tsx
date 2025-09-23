@@ -1,4 +1,7 @@
-export type Product = {
+// src/data/products.ts
+
+// ===== Старый формат (плитка/бордюры и т.п.) =====
+export type ProductBasic = {
   slug: string;
   name: string;
   priceFrom: string;       // "от 18 000 ₸/м²"
@@ -16,7 +19,7 @@ export type Product = {
   gallery?: string[];      // ["/images/..", ...]
 };
 
-export const PRODUCTS: Product[] = [
+export const PRODUCTS: ProductBasic[] = [
   {
     slug: "kordai-granit-plita-600x300x20",
     name: "Гранит Кордай — плита 600×300×20",
@@ -49,7 +52,7 @@ export const PRODUCTS: Product[] = [
   }
 ];
 
-// src/data/products.ts
+// ===== Новый формат (с вариантами) =====
 export type ProductVariant = {
   id: string;
   label: string;     // как показываем размер
@@ -69,8 +72,7 @@ export type Product = {
 };
 
 export const products: Product[] = [
-  // ...другие товары
-
+  // Памятник Кордай (пример из твоего кода)
   {
     id: "monument-kordai",
     slug: "monument-kordai",
@@ -88,5 +90,35 @@ export const products: Product[] = [
       { id: "90x50x8",  label: "90×50×8 см",  price: 129000 },
     ],
   },
-];
 
+  // 🔹 Новый памятник из красного кордайского гранита
+  {
+    id: "monument-kordai-red",
+    slug: "monument-kordai-krasnyy",
+    title: "Памятник — красный кордайский гранит",
+    subtitle: "Полировка, классические формы",
+    category: "Памятники",
+    baseUnit: "комплект",
+    images: ["/images/monuments/kordai-red-1.jpg"],
+    description:
+      "Памятники из красного кордайского гранита. Богатый цвет, высокая прочность и долговечность. Возможно изготовление по индивидуальным размерам и нанесение надписей.",
+    variants: [
+      { id: "80x45x6",  label: "80×45×6 см",  price: 95000 },
+      { id: "90x50x6",  label: "90×50×6 см",  price: 105000 },
+      { id: "100x50x6", label: "100×50×6 см", price: 115000 },
+      { id: "120x55x6", label: "120×55×6 см", price: 130000 },
+      { id: "130x60x6", label: "130×60×6 см", price: 145000 },
+
+      { id: "70x40x8",  label: "70×40×8 см",  price: 120000 },
+      { id: "80x45x8",  label: "80×45×8 см",  price: 130000 },
+      { id: "90x50x8",  label: "90×50×8 см",  price: 145000 },
+      { id: "100x50x8", label: "100×50×8 см", price: 160000 },
+      { id: "120x55x8", label: "120×55×8 см", price: 180000 },
+      { id: "130x60x8", label: "130×60×8 см", price: 195000 },
+      { id: "140x60x8", label: "140×60×8 см", price: 215000 },
+      { id: "150x60x8", label: "150×60×8 см", price: 235000 },
+      { id: "170x60x8", label: "170×60×8 см", price: 260000 },
+      { id: "180x60x8", label: "180×60×8 см", price: 285000 },
+    ],
+  },
+];

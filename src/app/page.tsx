@@ -2,52 +2,61 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="container mx-auto px-6 py-12 grid md:grid-cols-2 gap-8 items-center">
-      {/* Левая часть — текст */}
+    <main className="container mx-auto px-6 py-12 grid items-center gap-10 md:grid-cols-2">
+      {/* Левая колонка — текст */}
       <div>
-     <h1 className="text-4xl font-bold leading-tight">
-  Природный камень <br /> для фасадов, дорожек, интерьеров и памятников
-</h1>
+        <h1 className="text-4xl font-bold leading-tight">
+          Изделия из натурального камня для памятников и строительства
+        </h1>
 
-<p className="mt-4 text-xl italic text-gray-600">
-  Природная красота, проверенная временем
-</p>
-
-        <p className="mt-4 text-gray-700">
-          Гранит Кордай, бордюры, плитка, брусчатка. Производство и поставка по
-          Казахстану. Опт и проекты.
+        <p className="mt-4 text-lg text-gray-700">
+          Памятники, гранитные плиты, бордюры и брусчатка. Собственное
+          производство и поставки по всему Казахстану.
         </p>
 
-        <div className="mt-6 flex gap-4">
-          <a
-            href="/catalog"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Перейти в каталог
-          </a>
+        {/* CTA-кнопки: основной — рассчёт стоимости */}
+        <div className="mt-6 flex flex-wrap gap-4">
           <a
             href="/contacts"
-            className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition"
+            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+            aria-label="Рассчитать стоимость"
           >
             Рассчитать стоимость
           </a>
+          <a
+            href="/products"
+            className="px-6 py-3 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+            aria-label="Перейти в каталог"
+          >
+            Перейти в каталог
+          </a>
         </div>
 
-        <ul className="mt-6 space-y-2 text-gray-700">
-          <li>✅ Собственное производство/партнёры</li>
-          <li>✅ Скорость: резка и отгрузка в срок</li>
-          <li>✅ Доставка по РК, паллетирование</li>
-          <li>✅ Документы и образцы</li>
+        {/* Преимущества — без галочек, с нейтральными иконками */}
+        <ul className="mt-8 space-y-2 text-gray-800">
+          <li className="flex items-start gap-2">
+            <span className="text-xl leading-6">🏭</span>
+            <span>Собственное производство</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-xl leading-6">🚚</span>
+            <span>Доставка по всему Казахстану</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-xl leading-6">⏱</span>
+            <span>Сроки и точность отгрузки</span>
+          </li>
         </ul>
       </div>
 
-      {/* Правая часть — картинка */}
-      <div className="relative w-full h-80 md:h-full">
+      {/* Правая колонка — изображение */}
+      <div className="relative w-full h-80 md:h-[480px]">
         <Image
-          src="/images/granite.jpg" // сохраняем картинку сюда: public/images/granite.jpg
-          alt="Гранитные плиты"
+          src="/images/granite.jpg" // помести файл в public/images/granite.jpg
+          alt="Гранит: изделия и фактура камня"
           fill
-          className="object-cover rounded-xl"
+          className="object-cover rounded-xl shadow-sm"
+          priority
         />
       </div>
     </main>
