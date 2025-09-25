@@ -1,4 +1,6 @@
+// src/app/page.tsx
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -14,25 +16,26 @@ export default function Home() {
           производство и поставки по всему Казахстану.
         </p>
 
-        {/* CTA-кнопки: основной — рассчёт стоимости */}
+        {/* CTA-кнопки */}
         <div className="mt-6 flex flex-wrap gap-4">
-          <a
+          <Link
             href="/contacts"
             className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
             aria-label="Рассчитать стоимость"
           >
             Рассчитать стоимость
-          </a>
-          <a
+          </Link>
+
+          <Link
             href="/products"
             className="px-6 py-3 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
             aria-label="Перейти в каталог"
           >
             Перейти в каталог
-          </a>
+          </Link>
         </div>
 
-        {/* Преимущества — без галочек, с нейтральными иконками */}
+        {/* Преимущества */}
         <ul className="mt-8 space-y-2 text-gray-800">
           <li className="flex items-start gap-2">
             <span className="text-xl leading-6">🏭</span>

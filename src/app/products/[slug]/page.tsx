@@ -1,76 +1,126 @@
-import { PRODUCTS } from "@/data/products";
-import type { Product } from "@/data/products";
-import Link from "next/link";
+// src/app/products/[slug]/page.tsx
+import {
+  PRODUCTS,
+  products,
+  type ProductBasic,
+  type Product,
+} from "@/data/products";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return PRODUCTS.map(p => ({ slug: p.slug }));
+type CatalogItem =
+  | { type: "basic"; item: ProductBasic }
+  | { type: "variant"; item: Product };
+
+function getItem(slug: string): CatalogItem | undefined {
+  const v = products.find((p) => p.slug === slug);
+  if (v) return { type: "variant", item: v };
+  const b = PRODUCTS.find((p) => p.slug === slug);
+  if (b) return { type: "basic", item: b };
+  return undefined;
 }
 
-function getProduct(slug: string): Product | undefined {
-  return PRODUCTS.find(p => p.slug === slug);
+// SSG для обоих источников
+export function generateStaticParams() {
+  return [
+    ...products.map((p) => ({ slug: p.slug })),
+    ...PRODUCTS.map((p) => ({ slug: p.slug })),
+  ];
 }
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
-  const p = getProduct(params.slug);
-  if (!p) {
+  const ci = getItem(params.slug);
+  if (!ci) return notFound();
+
+  if (ci.type === "variant") {
+    const p = ci.item; // Product
     return (
-      <div>
-        <h1 className="text-2xl font-bold">Товар не найден</h1>
-        <Link href="/products" className="underline mt-4 inline-block">Вернуться в каталог</Link>
-      </div>
+      <main className="mx-auto max-w-4xl px-4 py-10">
+        <h1 className="text-3xl font-bold mb-2">{p.title}</h1>
+        {p.subtitle && <p className="text-gray-600 mb-4">{p.subtitle}</p>}
+        {p.images?.[0] && (
+          <div className="mb-6 overflow-hidden rounded-xl border">
+            <Image
+              src={p.images[0]}
+              alt={p.title}
+              width={1200}
+              height={800}
+              className="h-auto w-full object-cover"
+              priority
+            />
+          </div>
+        )}
+
+        <h2 className="text-xl font-semibold mb-3">Варианты и цены ({p.baseUnit ?? "шт"})</h2>
+        <ul className="grid sm:grid-cols-2 gap-3 mb-8">
+          {p.variants.map((v) => (
+            <li key={v.id} className="flex items-center justify-between rounded-lg border p-3">
+              <span>{v.label}</span>
+              <span className="font-semibold">{v.price.toLocaleString("ru-RU")} ₸</span>
+            </li>
+          ))}
+        </ul>
+
+        {p.description && <p className="text-gray-700">{p.description}</p>}
+      </main>
     );
   }
 
+  // basic (ProductBasic)
+  const p = ci.item;
   return (
-    <article className="grid gap-6 md:grid-cols-2">
-      <div className="space-y-3">
-        <img src={p.cover} alt={p.name} className="rounded-2xl border" />
-        {p.gallery?.length ? (
-          <div className="grid grid-cols-3 gap-2">
-            {p.gallery.map((src) => (
-              <img key={src} src={src} alt={p.name} className="rounded-xl border h-24 w-full object-cover" />
+    <main className="mx-auto max-w-4xl px-4 py-10">
+      <h1 className="text-3xl font-bold mb-2">{p.name}</h1>
+      <p className="text-gray-600 mb-4">
+        {p.category} · {p.stone} · {p.color}
+      </p>
+
+      {p.cover && (
+        <div className="mb-6 overflow-hidden rounded-xl border">
+          {/* если хочешь, замени на <Image/> */}
+          <img src={p.cover} alt={p.name} className="h-auto w-full object-cover" />
+        </div>
+      )}
+
+      <div className="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
+        {p.priceFrom && (
+          <div className="rounded-lg border p-3">
+            <div className="text-gray-500">Цена</div>
+            <div className="font-semibold">{p.priceFrom}</div>
+          </div>
+        )}
+        {p.size && (
+          <div className="rounded-lg border p-3">
+            <div className="text-gray-500">Размер</div>
+            <div className="font-semibold">{p.size}</div>
+          </div>
+        )}
+        {p.surface && (
+          <div className="rounded-lg border p-3">
+            <div className="text-gray-500">Поверхность</div>
+            <div className="font-semibold">{p.surface}</div>
+          </div>
+        )}
+        {p.origin && (
+          <div className="rounded-lg border p-3">
+            <div className="text-gray-500">Происхождение</div>
+            <div className="font-semibold">{p.origin}</div>
+          </div>
+        )}
+      </div>
+
+      {p.description && <p className="text-gray-700">{p.description}</p>}
+
+      {p.gallery && p.gallery.length > 0 && (
+        <>
+          <h2 className="text-xl font-semibold mt-8 mb-3">Галерея</h2>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {p.gallery.map((src, i) => (
+              <img key={i} src={src} alt={`${p.name} фото ${i + 1}`} className="rounded-lg border" />
             ))}
           </div>
-        ) : null}
-      </div>
-
-      <div>
-        <h1 className="text-3xl font-bold">{p.name}</h1>
-        <p className="mt-2 text-gray-700">{p.description}</p>
-
-        <ul className="mt-4 grid gap-1 text-sm text-gray-700">
-          <li><span className="text-gray-500">Камень:</span> {p.stone}</li>
-          <li><span className="text-gray-500">Категория:</span> {p.category}</li>
-          {p.size && <li><span className="text-gray-500">Размер:</span> {p.size}</li>}
-          {p.surface && <li><span className="text-gray-500">Обработка:</span> {p.surface}</li>}
-          {p.color && <li><span className="text-gray-500">Цвет:</span> {p.color}</li>}
-          {p.origin && <li><span className="text-gray-500">Месторождение:</span> {p.origin}</li>}
-          {p.frost && <li><span className="text-gray-500">Морозостойкость:</span> {p.frost}</li>}
-          {p.density && <li><span className="text-gray-500">Плотность:</span> {p.density}</li>}
-          {p.waterAbsorption && <li><span className="text-gray-500">Водопоглощение:</span> {p.waterAbsorption}</li>}
-        </ul>
-
-        <p className="mt-4 text-xl font-semibold text-blue-700">{p.priceFrom}</p>
-
-        <div className="mt-6 flex gap-3">
-          <a
-            href={`https://wa.me/77001234567?text=Здравствуйте! Интересует: ${encodeURIComponent(p.name)}`}
-            target="_blank" rel="noopener"
-            className="inline-flex items-center rounded-xl bg-blue-600 px-5 py-3 text-white font-medium hover:bg-blue-700 transition"
-          >
-            Заказать в WhatsApp
-          </a>
-          <a
-            href="https://t.me/your_username"
-            target="_blank" rel="noopener"
-            className="inline-flex items-center rounded-xl border px-5 py-3 font-medium hover:bg-gray-100 transition"
-          >
-            Написать в Telegram
-          </a>
-        </div>
-
-        <Link href="/products" className="underline mt-6 inline-block">← Назад к каталогу</Link>
-      </div>
-    </article>
+        </>
+      )}
+    </main>
   );
 }

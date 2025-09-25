@@ -4,20 +4,22 @@
 export type ProductBasic = {
   slug: string;
   name: string;
-  priceFrom: string;       // "от 18 000 ₸/м²"
+  priceFrom: string;
   category: "плитка" | "бордюр" | "брусчатка" | "столешница" | "прочее";
-  stone: string;           // гранит, мрамор, травертин и т.д.
-  color: string;           // серый, бежевый...
-  size?: string;           // 600×300×20 мм
-  surface?: string;        // полированный, термо, бучардированный
-  density?: string;        // 2.65 г/см³ (если нужно)
-  waterAbsorption?: string;// 0.2%
-  frost?: string;          // F200
-  origin?: string;         // Кордай, Карелия и т.п.
+  stone: string;                 // ← уже обязателен
+  color: string;                 // ← уже обязателен
+  size?: string;
+  surface?: string;
+  density?: string;
+  waterAbsorption?: string;
+  frost?: string;
+  origin?: string;
   description: string;
-  cover: string;           // "/images/kordai-plita.jpg"
-  gallery?: string[];      // ["/images/..", ...]
+  cover: string;
+  gallery?: string[];
 };
+
+
 
 export const PRODUCTS: ProductBasic[] = [
   {
@@ -55,8 +57,8 @@ export const PRODUCTS: ProductBasic[] = [
 // ===== Новый формат (с вариантами) =====
 export type ProductVariant = {
   id: string;
-  label: string;     // как показываем размер
-  price: number;     // цена в тенге
+  label: string;
+  price: number;
 };
 
 export type Product = {
@@ -65,14 +67,19 @@ export type Product = {
   title: string;
   subtitle?: string;
   category: string;
-  baseUnit?: string; // "шт", "комплект", "м²" и т.п.
+  baseUnit?: string;
   images: string[];
   variants: ProductVariant[];
+
+  // ← ДЕЛАЕМ ОБЯЗАТЕЛЬНЫМИ
+  stone: string;
+  color: string;
+
   description?: string;
 };
 
-export const products: Product[] = [
-  // Памятник Кордай (пример из твоего кода)
+
+ export const products: Product[] = [
   {
     id: "monument-kordai",
     slug: "monument-kordai",
@@ -81,6 +88,8 @@ export const products: Product[] = [
     category: "Памятники",
     baseUnit: "комплект",
     images: ["/images/monuments/kordai-1.jpg"],
+    stone: "гранит",                 // ← добавили
+    color: "красный",       // ← добавили
     description:
       "Памятники из гранита Кордай. Аккуратная полировка, долговечность. Возможно нанесение портрета и текста.",
     variants: [
@@ -100,6 +109,8 @@ export const products: Product[] = [
     category: "Памятники",
     baseUnit: "комплект",
     images: ["/images/monuments/kordai-red-1.jpg"],
+     stone: "гранит",                 // ← добавили
+    color: "красный",
     description:
       "Памятники из красного кордайского гранита. Богатый цвет, высокая прочность и долговечность. Возможно изготовление по индивидуальным размерам и нанесение надписей.",
     variants: [

@@ -1,8 +1,10 @@
-// src/components/SimpleProductCard.tsx
 import Image from "next/image";
 import ColorSwatch from "@/components/ColorSwatch";
+import type { ProductBasic } from "@/data/products";
 
-export default function SimpleProductCard({ p }: { p: any }) {
+type Props = { p: ProductBasic };
+
+export default function SimpleProductCard({ p }: Props) {
   const title = composeTitle(p);
 
   return (
@@ -24,57 +26,34 @@ export default function SimpleProductCard({ p }: { p: any }) {
       </div>
 
       <div className="p-4 flex flex-col gap-2.5">
-        {/* Заголовок */}
-        <h3 className="font-semibold text-base leading-tight group-hover:underline">
-          {title}
-        </h3>
+        <h3 className="font-semibold text-base leading-tight group-hover:underline">{title}</h3>
 
-        {/* Мета: Камень • Категория • Цвет */}
         <p className="text-sm text-gray-600">
-          {[
-            p.stone && capitalize(p.stone),
-            p.category && capitalize(p.category),
-            p.color && capitalize(p.color),
-          ]
+          {[p.stone && capitalize(p.stone), p.category && capitalize(p.category), p.color && capitalize(p.color)]
             .filter(Boolean)
             .join(" • ")}
         </p>
 
-        {/* Бейдж цвета (по желанию оставить) */}
         <div className="mt-1 flex items-center gap-2">
           {p.color && <ColorSwatch name={p.color} />}
         </div>
 
-        {p.priceFrom && (
-          <div className="mt-1 text-lg font-bold">{p.priceFrom}</div>
-        )}
+        {p.priceFrom && <div className="mt-1 text-lg font-bold">{p.priceFrom}</div>}
       </div>
     </article>
   );
 }
 
 /* -------- helpers -------- */
-function composeTitle(p: any) {
-  // Если размер в name уже есть — не дублируем
+function composeTitle(p: ProductBasic) {
   const hasSizeInName =
-    typeof p.name === "string" &&
-    typeof p.size === "string" &&
-    p.name.includes(cleanSize(p.size));
+    typeof p.name === "string" && typeof p.size === "string" && p.name.includes(cleanSize(p.size!));
 
-  if (p.name) return p.name;
   if (p.name && !hasSizeInName && p.size) return `${p.name} ${cleanSize(p.size)}`;
-  // если name пуст, соберём заголовок из категории/камня/размера
-  const parts = [
-    p.category ? capitalize(p.category) : "",
-    p.stone ? capitalize(p.stone) : "",
-    p.size ? cleanSize(p.size) : "",
-  ].filter(Boolean);
+  if (p.name) return p.name;
+
+  const parts = [p.category ? capitalize(p.category) : "", p.stone ? capitalize(p.stone) : "", p.size ? cleanSize(p.size) : ""].filter(Boolean);
   return parts.join(" ");
 }
-
-function cleanSize(s = "") {
-  return s.replace(/\s*мм$/i, ""); // "600×300×20 мм" -> "600×300×20"
-}
-function capitalize(s = "") {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
+function cleanSize(s = "") { return s.replace(/\s*мм$/i, ""); }
+function capitalize(s = "") { return s.charAt(0).toUpperCase() + s.slice(1); }
