@@ -1,4 +1,3 @@
-// src/app/products/page.tsx
 import ProductsFilterBar from "@/components/ProductsFilterBar";
 import {
   PRODUCTS,
@@ -10,7 +9,12 @@ import SimpleProductCard from "@/components/SimpleProductCard";
 import VariantProductCard from "@/components/VariantProductCard";
 
 /** URL-параметры фильтров */
-type SearchParams = { stone?: string; category?: string; color?: string; q?: string };
+type SearchParams = {
+  stone?: string;
+  category?: string;
+  color?: string;
+  q?: string;
+};
 
 /** Единый тип элемента каталога */
 type CatalogItem =
@@ -34,11 +38,11 @@ export default function ProductsPage({
   const facets = {
     stones: unique([
       ...PRODUCTS.map((p) => (p.stone || "").trim()),
-      ...products.map((p) => ((p as any).stone || "").trim()),
+      ...products.map((p) => (p.stone || "").trim()),
     ]).filter(Boolean),
     colors: unique([
       ...PRODUCTS.map((p) => (p.color || "").trim()),
-      ...products.map((p) => ((p as any).color || "").trim()),
+      ...products.map((p) => (p.color || "").trim()),
     ]).filter(Boolean),
     categories: unique([
       ...PRODUCTS.map((p) => (p.category || "").trim()),
@@ -48,35 +52,23 @@ export default function ProductsPage({
 
   // Фильтрация
   const filtered = catalog.filter((ci) => {
-    // 👇 прячем товары, помеченные hidden: true
-    if ((ci.item as any).hidden) return false;
+    const p = ci.item as ProductBasic & Product;
 
-    if (ci.type === "basic") {
-      const p = ci.item;
-      if (stone && norm(p.stone) !== stone) return false;
-      if (color && norm(p.color) !== color) return false;
-      if (category && norm(p.category) !== category) return false;
+    if ((p as { hidden?: boolean }).hidden) return false;
+    if (stone && norm(p.stone) !== stone) return false;
+    if (color && norm(p.color) !== color) return false;
+    if (category && norm(p.category) !== category) return false;
 
-      if (q) {
-        const hay = `${p.name} ${p.slug} ${p.category} ${p.stone} ${p.color}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    } else {
-      const p = ci.item as Product;
+   if (q) {
+  let namePart = "";
+  if ("name" in p && typeof p.name === "string") namePart = p.name;
+  else if ("title" in p && typeof p.title === "string") namePart = p.title;
 
-      // у памятников stone/color могут быть — учитываем, если заданы
-      if (stone && norm((p as any).stone) !== stone) return false;
-      if (color && norm((p as any).color) !== color) return false;
+  const hay = `${namePart} ${p.slug} ${p.category ?? ""} ${p.stone ?? ""} ${p.color ?? ""}`.toLowerCase();
+  if (!hay.includes(q)) return false;
+}
 
-      if (category && norm(p.category) !== category) return false;
-
-      if (q) {
-        const hay = `${p.title ?? ""} ${p.slug} ${p.category} ${(p as any).stone ?? ""} ${(p as any).color ?? ""}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    }
+    return true;
   });
 
   return (
@@ -101,9 +93,9 @@ export default function ProductsPage({
             {filtered.map((ci) => (
               <li key={ci.item.slug}>
                 {ci.type === "variant" ? (
-                  <VariantProductCard product={ci.item} />
+                  <VariantProductCard product={ci.item as Product} />
                 ) : (
-                  <SimpleProductCard p={ci.item} />
+                  <SimpleProductCard p={ci.item as ProductBasic} />
                 )}
               </li>
             ))}

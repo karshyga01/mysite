@@ -24,36 +24,32 @@ export async function POST(req: Request) {
       `📞 <b>Телефон:</b> ${escapeHtml(phone) || "-"}\n` +
       `💬 <b>Сообщение:</b> ${escapeHtml(message) || "-"}`;
 
-    const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-store",
       body: JSON.stringify({
-        chat_id: chatId,       // строка или число — ок
+        chat_id: chatId,
         text,
-        parse_mode: "HTML",    // чтобы работало форматирование
-        disable_web_page_preview: true
+        parse_mode: "HTML",
+        disable_web_page_preview: true,
       }),
     });
 
-    const data = await tg.json().catch(() => ({}));
+    type TgResponse = { ok: boolean; description?: string };
+    const data: TgResponse = await response.json().catch(() => ({ ok: false }));
 
-    if (!tg.ok || !data?.ok) {
-      const reason = data?.description || `HTTP ${tg.status}`;
+    if (!response.ok || !data.ok) {
+      const reason = data?.description || `HTTP ${response.status}`;
       console.error("Telegram send error:", reason);
-      return NextResponse.json(
-        { ok: false, error: reason },
-        { status: 500 }
-      );
+      return NextResponse.json({ ok: false, error: reason }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    console.error("TG route error:", err?.message || err);
-    return NextResponse.json(
-      { ok: false, error: err?.message || "Send error" },
-      { status: 500 }
-    );
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : "Send error";
+    console.error("TG route error:", msg);
+    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 }
 
