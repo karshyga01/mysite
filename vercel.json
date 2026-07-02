@@ -1,0 +1,11 @@
+{
+  "redirects": [
+    { "source": "/products", "destination": "/#products", "permanent": true },
+    { "source": "/products/:slug", "destination": "/#products", "permanent": true },
+    { "source": "/contacts", "destination": "/#contact", "permanent": true },
+    { "source": "/services", "destination": "/#categories", "permanent": true },
+    { "source": "/about", "destination": "/", "permanent": true },
+    { "source": "/articles", "destination": "/", "permanent": true },
+    { "source": "/articles/:slug", "destination": "/", "permanent": true }
+  ]
+}
