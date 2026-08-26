@@ -1,0 +1,78 @@
+<section class="cta-band" id="zayavka">
+  <div class="cta-band__inner">
+    <div>
+      <p class="eyebrow">Расчёт и консультация</p>
+      <h2>Расскажите, что нужно — посчитаем в тот же день</h2>
+      <p>Достаточно назвать размер участка или прислать фото места. Подскажем, какая плита встанет правильно, покажем варианты оформления и назовём точную сумму со сроком. Если размеров нет — подберём по фотографии.</p>
+
+      <ul class="cta-contacts">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span><a href="tel:+77788762495">+7 (778) 876-24-95</a><small>Телефон и WhatsApp, Пн–Сб 9:00–18:00</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span><a href="/kontakty/">Алматы, ул. Промышленная, 14</a><small>Шоурум — образцы камня и готовые работы</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          <span><a href="mailto:dias.akhmetbek2008@gmail.com">dias.akhmetbek2008@gmail.com</a><small>Пришлите эскиз или фото образца</small></span>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" id="leadForm" onsubmit="handleSubmit(event)" novalidate>
+      <h3>Оставить заявку</h3>
+      <p>Заполните — и заявка уйдёт нам в WhatsApp одним сообщением. Перезвоним или ответим в переписке.</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-name">Имя</label>
+          <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="f-phone">Телефон</label>
+          <input id="f-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-type">Что нужно</label>
+          <select id="f-type" name="type">
+            <option value="">Выберите</option>
+            <option>Мусульманский памятник (құлпытас)</option>
+            <option>Христианский памятник</option>
+            <option>Памятник без символов</option>
+            <option>Гравировка на готовом памятнике</option>
+            <option>Благоустройство места</option>
+            <option>Другое изделие из камня</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-city">Город</label>
+          <input id="f-city" name="city" type="text" placeholder="Алматы" autocomplete="address-level2" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-comment">Что важно знать</label>
+        <textarea id="f-comment" name="comment" placeholder="Размер участка, желаемый камень, что нужно из гравировки"></textarea>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="f-company">Не заполняйте это поле</label>
+        <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit" class="btn btn--wa">Отправить в WhatsApp →</button>
+      <p class="form__note">Нажимая кнопку, вы соглашаетесь на обработку указанных данных для ответа на обращение. Телефон нужен только чтобы связаться по заявке.</p>
+
+      <div class="form-fallback" id="formFallback" hidden>
+        WhatsApp не открылся — браузер заблокировал новое окно.
+        <a class="btn btn--wa btn--sm" id="fallbackWaLink" href="https://wa.me/77788762495" target="_blank" rel="noopener">Открыть WhatsApp вручную</a>
+        <button type="button" class="btn btn--ghost btn--sm" id="copyLeadBtn" style="margin-left:8px;">Скопировать текст заявки</button>
+      </div>
+    </form>
+  </div>
+</section>

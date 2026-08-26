@@ -1,0 +1,11 @@
+{
+  "name": "tabigitas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Сайт Tabigi Tas — памятники и мемориальные комплексы из камня",
+  "scripts": {
+    "build": "node tools/build.js && node tools/build-sitemaps.js",
+    "start": "npm run build && node tools/serve.js",
+    "images": "bash tools/build-images.sh"
+  }
+}

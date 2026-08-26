@@ -1,11 +1,143 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "trailingSlash": true,
+  "cleanUrls": false,
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(styles.css|app.js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
+    }
+  ],
   "redirects": [
-    { "source": "/products", "destination": "/#products", "permanent": true },
-    { "source": "/products/:slug", "destination": "/#products", "permanent": true },
-    { "source": "/contacts", "destination": "/#contact", "permanent": true },
-    { "source": "/services", "destination": "/#categories", "permanent": true },
-    { "source": "/about", "destination": "/", "permanent": true },
-    { "source": "/articles", "destination": "/", "permanent": true },
-    { "source": "/articles/:slug", "destination": "/", "permanent": true }
+    {
+      "source": "/pamyatniki",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pamyatniki/ceny",
+      "destination": "/razmery-i-formy/",
+      "permanent": true
+    },
+    {
+      "source": "/galereya",
+      "destination": "/raboty/",
+      "permanent": true
+    },
+    {
+      "source": "/galereya/pamyatniki",
+      "destination": "/raboty/",
+      "permanent": true
+    },
+    {
+      "source": "/galereya/plitka",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/galereya/bruschatka",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/granitnaya-plitka",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/granitnaya-plitka/korday",
+      "destination": "/granit/kordayskiy/",
+      "permanent": true
+    },
+    {
+      "source": "/granitnaya-plitka/kurtinskiy",
+      "destination": "/granit/kurtinskiy/",
+      "permanent": true
+    },
+    {
+      "source": "/granitnaya-plitka/alatagyn",
+      "destination": "/granit/alatagyn/",
+      "permanent": true
+    },
+    {
+      "source": "/bruschatka",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/bruschatka/granitnaya",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/bruschatka/izvestnyak",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/bordyurnyy-kamen",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/travertin",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/talkohlorit",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    }
   ]
 }

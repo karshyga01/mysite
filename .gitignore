@@ -1,0 +1,15 @@
+# Результат сборки — собирается из src/, в репозитории ему не место
+dist/
+
+# Служебное
+.DS_Store
+node_modules/
+.vercel
+.env
+.env.local
+
+# Локальные инструкции ИИ-агентов, к сайту отношения не имеют
+CLAUDE.md
+AGENTS.md
+.claude/
+.cursor/

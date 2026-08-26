@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.tabigitas.kz/sitemap.xml
+Sitemap: https://www.tabigitas.kz/sitemap-images.xml
