@@ -60,8 +60,18 @@
   ],
   "redirects": [
     {
+      "source": "/pamyatniki/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/pamyatniki",
       "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pamyatniki/ceny/",
+      "destination": "/razmery-i-formy/",
       "permanent": true
     },
     {
@@ -70,7 +80,17 @@
       "permanent": true
     },
     {
+      "source": "/galereya/",
+      "destination": "/raboty/",
+      "permanent": true
+    },
+    {
       "source": "/galereya",
+      "destination": "/raboty/",
+      "permanent": true
+    },
+    {
+      "source": "/galereya/pamyatniki/",
       "destination": "/raboty/",
       "permanent": true
     },
@@ -80,7 +100,17 @@
       "permanent": true
     },
     {
+      "source": "/galereya/plitka/",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
       "source": "/galereya/plitka",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/galereya/bruschatka/",
       "destination": "/drugie-izdeliya/",
       "permanent": true
     },
@@ -90,8 +120,18 @@
       "permanent": true
     },
     {
+      "source": "/granitnaya-plitka/",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
       "source": "/granitnaya-plitka",
       "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/granitnaya-plitka/korday/",
+      "destination": "/granit/kordayskiy/",
       "permanent": true
     },
     {
@@ -100,8 +140,18 @@
       "permanent": true
     },
     {
+      "source": "/granitnaya-plitka/kurtinskiy/",
+      "destination": "/granit/kurtinskiy/",
+      "permanent": true
+    },
+    {
       "source": "/granitnaya-plitka/kurtinskiy",
       "destination": "/granit/kurtinskiy/",
+      "permanent": true
+    },
+    {
+      "source": "/granitnaya-plitka/alatagyn/",
+      "destination": "/granit/alatagyn/",
       "permanent": true
     },
     {
@@ -110,7 +160,17 @@
       "permanent": true
     },
     {
+      "source": "/bruschatka/",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
       "source": "/bruschatka",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/bruschatka/granitnaya/",
       "destination": "/drugie-izdeliya/",
       "permanent": true
     },
@@ -120,7 +180,17 @@
       "permanent": true
     },
     {
+      "source": "/bruschatka/izvestnyak/",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
       "source": "/bruschatka/izvestnyak",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/bordyurnyy-kamen/",
       "destination": "/drugie-izdeliya/",
       "permanent": true
     },
@@ -130,7 +200,17 @@
       "permanent": true
     },
     {
+      "source": "/travertin/",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
       "source": "/travertin",
+      "destination": "/drugie-izdeliya/",
+      "permanent": true
+    },
+    {
+      "source": "/talkohlorit/",
       "destination": "/drugie-izdeliya/",
       "permanent": true
     },
