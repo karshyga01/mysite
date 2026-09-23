@@ -5,7 +5,7 @@
  *   src/partials/*.html   — общие блоки (шапка, подвал, формы)
  *   src/pages/*.html      — содержимое страниц
  *   static/*              — попадает в корень сайта как есть:
- *                           styles.css, app.js, robots.txt, иконки
+ *                           styles.css, app.js, robots.txt, иконки, .htaccess
  *   images/               — фотографии, копируются в dist/images/
  *   dist/                 — результат, его и смотрим в браузере
  *
@@ -206,7 +206,8 @@ fs.mkdirSync(DIST, { recursive: true });
 function copyDir(from, to) {
   fs.mkdirSync(to, { recursive: true });
   for (const e of fs.readdirSync(from, { withFileTypes: true })) {
-    if (e.name.startsWith('.')) continue;
+    // Служебные «точечные» файлы пропускаем, кроме .htaccess — это правила Apache на хостинге.
+    if (e.name.startsWith('.') && e.name !== '.htaccess') continue;
     const a = path.join(from, e.name);
     const b = path.join(to, e.name);
     if (e.isDirectory()) copyDir(a, b);

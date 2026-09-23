@@ -1,0 +1,59 @@
+# Правила для Apache (хостинг PS.kz / Plesk)
+# Заменяет vercel.json — редиректы старых адресов + https и www
+
+RewriteEngine On
+
+# 1. tabigitas.kz -> www.tabigitas.kz
+RewriteCond %{HTTP_HOST} ^tabigitas\.kz [NC]
+RewriteRule ^(.*)$ https://www.tabigitas.kz/$1 [R=301,L]
+
+# 2. http -> https
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://www.tabigitas.kz/$1 [R=301,L]
+
+# 3. Старые адреса (перенос правил из vercel.json)
+RewriteRule ^products/?$ /#products [R=301,L,NE]
+RewriteRule ^products/[^/]+/?$ /#products [R=301,L,NE]
+RewriteRule ^contacts/?$ /#contact [R=301,L,NE]
+RewriteRule ^services/?$ /#categories [R=301,L,NE]
+RewriteRule ^about/?$ / [R=301,L]
+RewriteRule ^articles/?$ / [R=301,L]
+RewriteRule ^articles/[^/]+/?$ / [R=301,L]
+
+# 3а. Адреса со старого сайта (все redirects из vercel.json)
+RewriteRule ^pamyatniki/?$ / [R=301,L]
+RewriteRule ^pamyatniki/ceny/?$ /razmery-i-formy/ [R=301,L]
+RewriteRule ^galereya/?$ /raboty/ [R=301,L]
+RewriteRule ^galereya/pamyatniki/?$ /raboty/ [R=301,L]
+RewriteRule ^galereya/plitka/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^galereya/bruschatka/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^granitnaya-plitka/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^granitnaya-plitka/korday/?$ /granit/kordayskiy/ [R=301,L]
+RewriteRule ^granitnaya-plitka/kurtinskiy/?$ /granit/kurtinskiy/ [R=301,L]
+RewriteRule ^granitnaya-plitka/alatagyn/?$ /granit/alatagyn/ [R=301,L]
+RewriteRule ^bruschatka/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^bruschatka/granitnaya/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^bruschatka/izvestnyak/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^bordyurnyy-kamen/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^travertin/?$ /drugie-izdeliya/ [R=301,L]
+RewriteRule ^talkohlorit/?$ /drugie-izdeliya/ [R=301,L]
+
+# 4. Своя страница 404 (она есть в сборке)
+ErrorDocument 404 /404.html
+
+# 5. Кэширование статики — сайт будет открываться быстрее
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# 6. Сжатие
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml
+</IfModule>
