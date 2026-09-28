@@ -43,6 +43,8 @@ jobs:
           protocol: ftps
           local-dir: ./dist/
           server-dir: ./
+          # сервер PS.kz отвечает медленно — ждём до 2 минут вместо 30 секунд
+          timeout: 120000
 
       - name: Проверка живого сайта
         run: |
