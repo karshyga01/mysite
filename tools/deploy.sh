@@ -43,7 +43,7 @@ fi
   | while IFS= read -r f; do printf '%s  %s\n' "$(sha256sum "$f" | cut -d' ' -f1)" "$f"; done) > "$work/new.txt"
 
 # 3. Что залить и что удалить
-LC_ALL=C comm -13 <(LC_ALL=C sort "$work/old.txt") "$work/new.txt" | sed 's/^[0-9a-f]*  //' > "$work/upload.txt"
+LC_ALL=C comm -13 <(LC_ALL=C sort "$work/old.txt") <(LC_ALL=C sort "$work/new.txt") | sed 's/^[0-9a-f]*  //' > "$work/upload.txt"
 LC_ALL=C comm -23 <(sed 's/^[0-9a-f]*  //' "$work/old.txt" | LC_ALL=C sort -u) \
                   <(sed 's/^[0-9a-f]*  //' "$work/new.txt" | LC_ALL=C sort -u) > "$work/delete.txt"
 echo "Залить: $(wc -l < "$work/upload.txt"), удалить: $(wc -l < "$work/delete.txt")"
