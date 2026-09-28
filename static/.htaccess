@@ -3,6 +3,10 @@
 
 RewriteEngine On
 
+# 0. Служебные файлы с точкой (например, журнал автозаливки
+#    .ftp-deploy-sync-state.json) наружу не отдаём. .well-known нужна для SSL.
+RewriteRule (^|/)\.(?!well-known/) - [F,L]
+
 # 1. tabigitas.kz -> www.tabigitas.kz
 RewriteCond %{HTTP_HOST} ^tabigitas\.kz [NC]
 RewriteRule ^(.*)$ https://www.tabigitas.kz/$1 [R=301,L]

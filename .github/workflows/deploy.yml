@@ -1,0 +1,62 @@
+# Автозаливка сайта на хостинг PS.kz
+# При каждом пуше в main: собираем сайт (npm run build) и заливаем dist/
+# по FTP в httpdocs. Заливаются только изменённые файлы; то, что удалено
+# из dist/, удаляется и с сервера (но только файлы, которые залил сюда сам
+# этот скрипт — чужое в httpdocs он не трогает).
+#
+# Нужны секреты репозитория (Settings → Secrets and variables → Actions):
+#   FTP_SERVER   — адрес FTP-сервера, например srv-plesk59.ps.kz
+#   FTP_USERNAME — логин FTP-аккаунта, у которого домашняя папка = httpdocs
+#   FTP_PASSWORD — пароль этого аккаунта
+
+name: Заливка на хостинг
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Сборка
+        run: npm run build
+
+      - name: Заливка по FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./
+
+      - name: Проверка живого сайта
+        run: |
+          sleep 5
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://www.tabigitas.kz$1")
+            echo "$1 → $code (ждали $2)"
+            [ "$code" = "$2" ] || fail=1
+          }
+          check / 200
+          check /kontakty/ 200
+          check /kz/ 200
+          check /galereya/ 301
+          check /sitemap.xml 200
+          check /google3b6aed1b31b5e38f.html 200
+          exit $fail
