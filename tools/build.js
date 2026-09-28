@@ -78,45 +78,27 @@ function breadcrumbs(crumbs, url, lang) {
 /** Организация — один раз описана здесь, все страницы ссылаются на неё по @id.
  *  Так поисковик понимает, что это одна и та же компания на всём сайте. */
 const ORG = {
-  '@type': ['LocalBusiness', 'Store'],
+  '@type': 'Organization',
   '@id': BASE + '/#org',
   name: 'Tabigi Tas',
   alternateName: ['Табиғи тас', 'Tabigi Tas — памятники из гранита'],
   description:
     'Изготовление памятников и надгробий из казахстанского гранита: мусульманские құлпытас, ' +
     'христианские памятники, гравировка и резьба по камню. Собственный карьер и цех в Кордае, ' +
-    'шоурум в Алматы, установка и доставка по Казахстану.',
+    'Жамбылская область; доставка по всему Казахстану.',
   url: BASE + '/',
   telephone: '+77788762495',
   email: 'dias.akhmetbek2008@gmail.com',
-  currenciesAccepted: 'KZT',
-  paymentAccepted: 'Наличные, безналичный расчёт, перевод',
   image: [
     BASE + '/images/pamyatnik-musulmanskiy-mechet-minaret-krasnyy-granit.jpg',
     BASE + '/images/pamyatnik-kazahskiy-ornament-polumesyats-granit.jpg',
     BASE + '/images/pamyatniki-kulpytas-gotovye-raboty-tseh.jpg',
   ],
   logo: BASE + '/apple-touch-icon.png',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'ул. Промышленная, 14',
-    addressLocality: 'Алматы',
-    addressRegion: 'Алматы',
-    addressCountry: 'KZ',
-  },
   areaServed: [
     { '@type': 'Country', name: 'Казахстан' },
-    { '@type': 'City', name: 'Алматы' },
   ],
   knowsLanguage: ['ru', 'kk'],
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-  ],
 };
 
 function page({ meta, body }) {
@@ -160,8 +142,6 @@ function page({ meta, body }) {
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="theme-color" content="#12100e" />
   <meta name="author" content="Tabigi Tas" />
-  <meta name="geo.region" content="KZ-ALA" />
-  <meta name="geo.placename" content="Алматы" />
 
   <meta property="og:type" content="${meta.ogType || 'website'}" />
   <meta property="og:url" content="${canonical}" />
