@@ -27,7 +27,7 @@ if (!fs.existsSync(DIST)) {
 /** Приоритет и частота обхода по разделам. */
 function meta(url) {
   if (url === '/') return { priority: '1.0', freq: 'weekly' };
-  if (url === '/raboty/' || url.startsWith('/musulmanskie') || url === '/kulpytas/' || url.startsWith('/hristianskie'))
+  if (url === '/raboty/' || url === '/ceny/' || url.startsWith('/musulmanskie') || url === '/kulpytas/' || url.startsWith('/hristianskie'))
     return { priority: '0.9', freq: 'weekly' };
   if (url.startsWith('/granit/') || url === '/gravirovka/' || url === '/razmery-i-formy/')
     return { priority: '0.8', freq: 'monthly' };

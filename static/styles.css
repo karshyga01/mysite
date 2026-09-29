@@ -132,6 +132,7 @@ h4 { font-size: 18px; }
   transition: color 0.2s var(--ease);
 }
 .site-nav a:hover, .site-nav a.is-active { color: var(--bronze-3); }
+.site-nav > li > a { white-space: nowrap; }
 .site-nav .has-sub { position: relative; }
 .site-nav .has-sub > a::after { content: '▾'; font-size: 9px; margin-left: 5px; opacity: 0.6; }
 .subnav {
@@ -427,6 +428,17 @@ a.card:hover { border-left-color: var(--bronze); transform: translateY(-2px); bo
 .spec tr:last-child th, .spec tr:last-child td { border-bottom: none; }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); background: var(--paper); }
 
+/* Прайс (/ceny/): цены вправо и ровными столбцами, пояснение под названием */
+.price-table td { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 500; }
+.price-table thead th:not(:first-child) { text-align: right; }
+.price-table tbody th { white-space: normal; min-width: 150px; }
+.price-table th small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; margin-top: 2px; }
+.price-sub { font-size: 18px; margin: 30px 0 12px; }
+@media (max-width: 700px) {
+  .price-table th, .price-table td { padding: 11px 10px; font-size: 14px; }
+  .price-table tbody th { min-width: 96px; }
+}
+
 /* Плитки с размерами */
 .chips { display: flex; flex-wrap: wrap; gap: 9px; }
 .chip {
@@ -646,10 +658,21 @@ main > .page-head:first-child { padding-top: calc(var(--header-h) + 46px); }
 }
 
 /* --- 8. телефон и планшет ---------------------------------------------- */
+/* в шапке 7 пунктов: подпись под логотипом убираем раньше, чтобы меню не теснилось */
+@media (max-width: 1360px) {
+  .logo__sub { display: none; }
+  .site-nav { gap: 22px; }
+}
 @media (max-width: 1180px) {
   :root { --pad-x: 44px; }
   .site-nav { gap: 18px; }
   .site-nav a { font-size: 13px; }
+}
+
+/* казахское меню длиннее — переходим на «бургер» чуть раньше */
+@media (max-width: 1080px) {
+  html[lang="kk"] .site-nav, html[lang="kk"] .header-phone { display: none; }
+  html[lang="kk"] .burger { display: flex; }
 }
 
 @media (max-width: 1040px) {
