@@ -31,8 +31,15 @@ const BASE = 'https://www.tabigitas.kz';
 const read = (p) => fs.readFileSync(p, 'utf8');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-const nav = read(path.join(SRC, 'partials/nav.html')).trim();
-const footer = read(path.join(SRC, 'partials/footer.html')).trim();
+/** Шапка и подвал: на казахских страницах (lang: kk) — казахские версии. */
+const NAV = {
+  ru: read(path.join(SRC, 'partials/nav.html')).trim(),
+  kk: read(path.join(SRC, 'partials/nav-kk.html')).trim(),
+};
+const FOOTER = {
+  ru: read(path.join(SRC, 'partials/footer.html')).trim(),
+  kk: read(path.join(SRC, 'partials/footer-kk.html')).trim(),
+};
 
 /** {{> имя}} вставляет v2/src/partials/имя.html. Блоки могут вкладываться. */
 function includes(html, depth = 0) {
@@ -59,7 +66,7 @@ function breadcrumbs(crumbs, url, lang) {
   });
 
   const html =
-    `<nav class="crumbs" aria-label="Хлебные крошки">\n    ` +
+    `<nav class="crumbs" aria-label="${lang === 'kk' ? 'Бет жолы' : 'Хлебные крошки'}">\n    ` +
     links.join('\n    <span class="crumbs-sep">/</span>\n    ') +
     `\n  </nav>`;
 
@@ -162,15 +169,15 @@ ${ld}
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body${meta.bodyClass ? ` class="${meta.bodyClass}"` : ''}>
-<a class="skip-link" href="#main">Перейти к содержанию</a>
+<a class="skip-link" href="#main">${lang === 'kk' ? 'Негізгі мәтінге өту' : 'Перейти к содержанию'}</a>
 
-${nav}
+${NAV[lang] || NAV.ru}
 
 <main id="main">
 ${crumbHtml ? '<div class="crumbs-wrap">\n  ' + crumbHtml + '\n</div>\n\n' : ''}${body.trim()}
 </main>
 
-${footer}
+${FOOTER[lang] || FOOTER.ru}
 
 <script src="/app.js" defer></script>
 

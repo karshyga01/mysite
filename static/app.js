@@ -239,6 +239,9 @@ function quizReset() {
    Если окно заблокировано (Instagram, блокировщик) — показываем
    запасной блок со ссылкой и кнопкой «скопировать», заявка не теряется.
    ----------------------------------------------------------------------- */
+/* казахская страница — подписи кнопок по-казахски */
+var KK = document.documentElement.lang === 'kk';
+
 function handleSubmit(e) {
   e.preventDefault();
   var form = e.target;
@@ -295,7 +298,7 @@ function handleSubmit(e) {
 
   if (btn) {
     var old = btn.textContent;
-    btn.textContent = '✓ Открываем WhatsApp…';
+    btn.textContent = KK ? '✓ WhatsApp ашылып жатыр…' : '✓ Открываем WhatsApp…';
     btn.disabled = true;
     setTimeout(function () { btn.textContent = old; btn.disabled = false; }, 5000);
   }
@@ -352,8 +355,9 @@ document.addEventListener('DOMContentLoaded', function () {
     copyBtn.addEventListener('click', function () {
       var text = copyBtn.getAttribute('data-text') || '';
       var done = function () {
-        copyBtn.textContent = '✓ Скопировано';
-        setTimeout(function () { copyBtn.textContent = 'Скопировать текст заявки'; }, 2500);
+        var oldCopy = copyBtn.textContent;
+        copyBtn.textContent = KK ? '✓ Көшірілді' : '✓ Скопировано';
+        setTimeout(function () { copyBtn.textContent = oldCopy; }, 2500);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done, function () {});
