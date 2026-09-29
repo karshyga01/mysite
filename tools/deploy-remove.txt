@@ -1,0 +1,10 @@
+# Файлы, которые нужно удалить с сервера при заливке (по одному пути на строку,
+# относительно httpdocs). Нужен для старых файлов, залитых когда-то вручную:
+# автозаливка сама удаляет только то, что заливала сама. Удалять отсюда строки
+# не обязательно — повторное удаление несуществующего файла ничего не ломает.
+images/pamyatniki-iz-granita-almaty.jpg
+images/pamyatniki-iz-granita-almaty.webp
+images/pamyatniki-iz-granita-almaty-480.jpg
+images/pamyatniki-iz-granita-almaty-480.webp
+images/pamyatniki-iz-granita-almaty-800.jpg
+images/pamyatniki-iz-granita-almaty-800.webp

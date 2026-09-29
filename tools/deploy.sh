@@ -46,6 +46,10 @@ fi
 LC_ALL=C comm -13 <(LC_ALL=C sort "$work/old.txt") <(LC_ALL=C sort "$work/new.txt") | sed 's/^[0-9a-f]*  //' > "$work/upload.txt"
 LC_ALL=C comm -23 <(sed 's/^[0-9a-f]*  //' "$work/old.txt" | LC_ALL=C sort -u) \
                   <(sed 's/^[0-9a-f]*  //' "$work/new.txt" | LC_ALL=C sort -u) > "$work/delete.txt"
+# плюс старые файлы из ручных заливок (tools/deploy-remove.txt)
+if [ -f tools/deploy-remove.txt ]; then
+  grep -v -e '^[[:space:]]*#' -e '^[[:space:]]*$' tools/deploy-remove.txt >> "$work/delete.txt" || true
+fi
 echo "Залить: $(wc -l < "$work/upload.txt"), удалить: $(wc -l < "$work/delete.txt")"
 
 # 4. Скрипт для lftp: сначала заливка, потом удаление, в конце — новый манифест
